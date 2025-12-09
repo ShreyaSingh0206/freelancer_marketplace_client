@@ -3,6 +3,8 @@ import React from 'react'
 import { useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
+import { FaHeart } from "react-icons/fa";
+import axios from "axios";
 import {
   Search,
   ShoppingBag,
@@ -32,9 +34,25 @@ const Navbar = () => {
 }
 
   const onSearch = (e) => {
-    e.preventDefault();
-    if (!query.trim()) return;
-    window.location.href = `/search?q=${encodeURIComponent(query.trim())}`;
+  e.preventDefault();
+  if (!query.trim()) return;
+
+  const formatted = query
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]/g, "");
+
+  window.location.href = `/categories/${formatted}`;
+};
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/logout`, {}, { withCredentials: true });
+      window.location.href = "/login";
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
   };
 
   return (
@@ -42,8 +60,8 @@ const Navbar = () => {
 
       {/* Logo */}
       <div className="flex items-center gap-6">
-        <div  className="text-xl font-semibold text-primary-400 hover:opacity-90">
-          freelancr
+        <div  className="text-xl font-semibold text-primary-400 text-white hover:opacity-90">
+          HireHatch
         </div>
 
       </div>
@@ -74,8 +92,12 @@ const Navbar = () => {
       {/* Right‑side actions */}
       <div className="flex items-center gap-2">
         {/* Orders */}
-        <Link href="/orders" className="group relative flex h-9 w-9 items-center justify-center rounded-full hover:bg-neutral-800">
+        <Link href="/buyer/dashboard" className="group relative flex h-9 w-9 items-center justify-center rounded-full hover:bg-neutral-800">
           <ShoppingBag className="h-5 w-5 text-neutral-400 transition-colors group-hover:text-white" />
+        </Link>
+
+         <Link href="/buyer/dashboard" className="group relative flex h-9 w-9 items-center justify-center rounded-full hover:bg-neutral-800">
+          <FaHeart  className="h-5 w-5 text-neutral-400 transition-colors group-hover:text-white" />
         </Link>
 
        
@@ -101,20 +123,20 @@ const Navbar = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-48 bg-neutral-900 text-neutral-200">
             <DropdownMenuItem asChild>
-              <Link href="/dashboard" className="flex items-center gap-2">
+              <Link href="/buyer/dashboard" className="flex items-center gap-2">
                 <LayoutDashboard className="h-4 w-4" /> Dashboard
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/orders" className="flex items-center gap-2">
+              <Link href="/buyer/dashboard" className="flex items-center gap-2">
                 <ShoppingBag className="h-4 w-4" /> Orders
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href="/logout" className="flex items-center gap-2 text-red-400">
+              <button className="flex items-center gap-2 text-red-400" onClick={handleLogout}>
                 <LogOut className="h-4 w-4" /> Log out
-              </Link>
+              </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

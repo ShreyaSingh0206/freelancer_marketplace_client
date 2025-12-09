@@ -57,7 +57,7 @@ const categories = [
   },
   {
     slug: "Video and Animation",
-    label: "Vieo and Animation",
+    label: "Video and Animation",
     icon: Pencil,
     gradient: "from-amber-400 via-yellow-500 to-lime-500",
   },

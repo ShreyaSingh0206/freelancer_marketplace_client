@@ -48,6 +48,31 @@ export default function GigDetailPage() {
   }
 };
 
+const handleAddToWishlist = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/wishlist/add`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ gigId: gig._id }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("Gig added to wishlist!");
+    } else {
+      alert(data.message || "Failed to add to wishlist");
+    }
+  } catch (err) {
+    console.error("Error adding to wishlist:", err);
+    alert("Something went wrong");
+  }
+};
+
+
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#0f0f1b] via-[#1a1a2f] to-[#0f0f1b] text-white px-4 py-10">
@@ -100,14 +125,16 @@ export default function GigDetailPage() {
         {/* Sidebar Section */}
         <aside className="bg-white/5 border border-white/10 rounded-xl p-6 h-fit">
           <h3 className="text-2xl font-semibold mb-4">Get this Gig</h3>
-          <p className="text-green-400 text-xl font-bold mb-4">₹ {gig.price}</p>
+          <p className="text-green-400 text-xl font-bold mb-4">$ {gig.price}</p>
           <button
   onClick={handleBuyNow}
   className="w-full bg-green-500 hover:bg-green-600 transition text-white py-2 rounded-xl font-medium mb-3"
 >
   Buy Now
 </button>
-          <button className="w-full border border-white/20 hover:bg-white/10 transition text-white py-2 rounded-xl font-medium">
+          <button 
+          onClick={handleAddToWishlist}
+          className="w-full border border-white/20 hover:bg-white/10 transition text-white py-2 rounded-xl font-medium">
             ❤️ Add to Wishlist
           </button>
         </aside>

@@ -62,7 +62,7 @@ export default function CategoryGigsPage() {
               />
               <h3 className="text-xl font-semibold mb-1">{gig.title}</h3>
               <p className="text-sm text-gray-300 mb-2 line-clamp-2">{gig.desc}</p>
-              <p className="text-green-400 font-semibold">₹ {gig.price}</p>
+              <p className="text-green-400 font-semibold">$ {gig.price}</p>
             </div>
           </Link>
         ))}

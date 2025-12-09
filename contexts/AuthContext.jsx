@@ -11,7 +11,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/auth/me", {
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/me`, {
         withCredentials: true, // send cookies!
       })
       .then((res) => setUser(res.data))

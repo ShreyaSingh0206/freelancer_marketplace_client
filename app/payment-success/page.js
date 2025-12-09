@@ -28,7 +28,7 @@ export default function PaymentSuccessPage() {
   }, [sessionId, gigId]);
 
   const handleFinish = () => {
-    router.push("/dashboard");
+    router.push("/buyer/dashboard");
   };
 
   return (

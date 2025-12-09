@@ -34,7 +34,7 @@ const page = () => {
     if (data.user.role === 'client') {
       router.push('/categories');
     } else if (data.user.role === 'freelancer') {
-      router.push('/seller/personal_info');
+      router.push('/seller/dashboard');
     } else {
       throw new Error('Unknown user role');
     }

@@ -146,7 +146,7 @@ export default function GiginfoPage() {
             value={price}
             onChange={(e) => setPrice(e.target.value)}
               type="number"
-              placeholder="Enter price in ₹"
+              placeholder="Enter price in $"
               className="md:w-1/2 w-full bg-zinc-800 p-3 rounded-lg border border-zinc-700 text-white"
             />
           </div>
