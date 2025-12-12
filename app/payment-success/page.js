@@ -1,12 +1,12 @@
-"use client";
+import dynamic from "next/dynamic";
 
-import { Suspense } from "react";
-import PaymentSuccessContent from "./payment-success-content";
+const PaymentSuccessContent = dynamic(
+  () => import("./payment-success-content"),
+  {
+    ssr: false, // IMPORTANT: disable SSR so no prerender happens
+  }
+);
 
-export default function PaymentSuccessPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <PaymentSuccessContent />
-    </Suspense>
-  );
+export default function Page() {
+  return <PaymentSuccessContent />;
 }
