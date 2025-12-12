@@ -25,6 +25,40 @@ export default function Home() {
   }
 };
 
+const handleDashboardRedirect = () => {
+  if (!user) {
+    router.push("/login?redirect=/dashboard");
+    return;
+  }
+
+  if (user.role === "client") {
+    router.push("/buyer/dashboard");
+  } else if (user.role === "freelancer") {
+    router.push("/seller/dashboard");
+  } else {
+    alert("Invalid user role");
+  }
+};
+
+const services = [
+  {
+    title: "Website Development",
+    desc: "Modern, responsive and high-performance websites.",
+    img: "website-development-links-seo-webinar-cyberspace-concept.jpg",
+  },
+  {
+    title: "App Development",
+    desc: "Powerful Android & iOS applications built for scale.",
+    img: "representations-user-experience-interface-design.jpg",
+  },
+  {
+    title: "Graphic Designing",
+    desc: "Creative branding, logos & social media designs.",
+    img: "artist-using-tablet-stylus-pen.jpg",
+  },
+];
+
+
   return (
     <div className="min-h-screen bg-gray-900 text-white overflow-hidden relative">
       <Head>
@@ -63,6 +97,7 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="flex items-center"
           >
+            <img src="freelancer_logo.png" className='h-18' alt="" />
             <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
               HireHatch
             </h1>
@@ -76,12 +111,21 @@ export default function Home() {
           >
             <Link href="/login" className="hover:text-indigo-400 transition-colors py-2 duration-300">Sign In</Link>
             <Link href="/signup" className="px-4 py-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transition-all duration-300">Sign Up</Link>
-            <Link href="/creategig" className="hover:text-indigo-400 transition-colors duration-300 flex items-center">
+            <Link
+             href="/signup"
+             className="hover:text-indigo-400 transition-colors duration-300 flex items-center">
               <span>Become a Seller</span>
               <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
               </svg>
             </Link>
+            <button
+  onClick={handleDashboardRedirect}
+  className="px-4 py-2 rounded-full border border-indigo-500 text-indigo-400 hover:bg-indigo-500/10 transition-all duration-300"
+>
+  Go to Dashboard
+</button>
+
           </motion.div>
         </div>
       </nav>
@@ -112,11 +156,11 @@ export default function Home() {
                className="px-8 py-3 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-medium transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
                 Find Talent
               </button>
-              <button
-               onClick={() => handleProtectedRedirect("/creategig")}
+              <Link
+               href="/signup"
                className="px-8 py-3 rounded-full border-2 border-indigo-500 text-indigo-400 hover:bg-indigo-500/10 font-medium transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
                 Start Selling
-              </button>
+              </Link>
             </div>
           </motion.div>
 
@@ -135,24 +179,34 @@ export default function Home() {
             </div>
             <div className="p-8 md:p-12">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {[1, 2, 3].map((item) => (
-                  <motion.div
-                    key={item}
-                    whileHover={{ y: -10 }}
-                    className="bg-gray-800/70 hover:bg-gray-700/70 rounded-xl p-6 transition-all duration-300 border border-gray-700/50"
-                  >
-                    <div className="w-16 h-16 bg-indigo-500/20 rounded-lg flex items-center justify-center mb-4">
-                      <svg className="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                      </svg>
-                    </div>
-                    <h3 className="text-lg font-semibold mb-2">Service {item}</h3>
-                    <p className="text-gray-400 text-sm">Expert freelancer available for your project</p>
-                    <button className="mt-4 text-sm px-4 py-2 bg-indigo-600/30 hover:bg-indigo-600/50 rounded-full transition-all duration-300">
-                      View Profile
-                    </button>
-                  </motion.div>
-                ))}
+                {services.map((service, index) => (
+  <motion.div
+    key={index}
+    whileHover={{ y: -10 }}
+    className="bg-gray-800/70 hover:bg-gray-700/70 rounded-xl overflow-hidden transition-all duration-300 border border-gray-700/50"
+  >
+    {/* ✅ Service Image */}
+    <img
+      src={service.img}
+      alt={service.title}
+      className="w-full h-40 object-cover"
+    />
+
+    {/* ✅ Service Content */}
+    <div className="p-6 ">
+      <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
+      <p className="text-gray-400 text-sm">{service.desc}</p>
+
+      <Link
+  href="/categories"
+  className="mt-4 inline-block text-sm px-4 py-2 bg-indigo-600/30 hover:bg-indigo-600/50 rounded-full transition-all duration-300"
+>
+  Explore
+</Link>
+    </div>
+  </motion.div>
+))}
+
               </div>
             </div>
           </motion.div>
@@ -240,9 +294,9 @@ export default function Home() {
                 Join thousands of businesses and freelancers already using HireHatch.
               </p>
               <div className="flex flex-wrap justify-center gap-6">
-                <button className="px-8 py-4 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-medium transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl shadow-lg shadow-indigo-500/20">
+                <Link href="/signup"className="px-8 py-4 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-medium transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl shadow-lg shadow-indigo-500/20">
                   Create Free Account
-                </button>
+                </Link>
                 <button className="px-8 py-4 rounded-full border-2 border-indigo-500 text-indigo-400 hover:bg-indigo-500/10 font-medium transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl">
                   Learn More
                 </button>

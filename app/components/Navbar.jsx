@@ -59,9 +59,12 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 flex h-14 w-full items-center justify-between gap-4 border border-white/10 bg-gray-900 px-4 backdrop-blur-md shadow-md md:px-8 ">
 
       {/* Logo */}
-      <div className="flex items-center gap-6">
-        <div  className="text-xl font-semibold text-primary-400 text-white hover:opacity-90">
+      <div className="flex items-center gap-2">
+        <div className='flex items-center'>
+        <img src="freelancer_logo.png" className='h-14' alt="" />
+        <div  className="text-xl font-semibold text-primary-400 bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent hover:opacity-90">
           HireHatch
+        </div>
         </div>
 
       </div>

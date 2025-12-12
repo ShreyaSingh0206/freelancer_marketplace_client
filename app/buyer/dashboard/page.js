@@ -107,10 +107,10 @@ export default function BuyerDashboard() {
   >
     {/* ✅ Chat Button at Top-Right */}
     <button
-      onClick={() => handleChatWithSeller(order.gig.seller.user)}
-      className="absolute top-3 right-3 bg-blue-600 text-white px-4 py-2 rounded text-xs hover:bg-blue-700"
+      onClick={() => handleChatWithSeller(order.sellerId)}
+      className="absolute top-3 right-3 bg-purple-600 text-white px-4 py-2 rounded  hover:bg-purple-700"
     >
-      💬 Chat
+      💬 Chat with seller
     </button>
 
     <h3 className="text-xl font-bold mb-2">{order.gig.title}</h3>

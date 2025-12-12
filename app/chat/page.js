@@ -54,23 +54,32 @@ useEffect(() => {
   }
 
   return (
-  <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-900 text-white">
-    <div className="w-full max-w-2xl bg-gray-800 rounded-lg shadow-lg p-6">
-      <h2 className="text-2xl font-semibold text-center mb-4">
+  <div className="h-screen w-full flex items-center justify-center bg-gray-900 text-white overflow-hidden">
+    
+    {/* ✅ Chat Wrapper (HEIGHT LOCKED) */}
+    <div className="h-[90vh] w-[650px] max-w-[95vw] bg-gray-800 rounded-lg shadow-lg flex flex-col overflow-hidden">
+
+      {/* ✅ Header */}
+      <h2 className="text-xl font-semibold text-center py-4 border-b border-gray-700">
         Chat Room 💬
       </h2>
 
-      <ChatBox
-        conversationId={selectedConversation._id}
-        loggedInUserId={user._id}
-        receiverId={
-          selectedConversation.participants.find(
-            (p) => p._id !== user._id
-          )._id
-        }
-      />
+      {/* ✅ ChatBox MUST be inside the height container */}
+      <div className="flex-1 overflow-hidden">
+        <ChatBox
+          conversationId={selectedConversation._id}
+          loggedInUserId={user._id}
+          receiverId={
+            selectedConversation.participants.find(
+              (p) => p._id !== user._id
+            )._id
+          }
+        />
+      </div>
+
     </div>
   </div>
 );
+
 
 }

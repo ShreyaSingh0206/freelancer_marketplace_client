@@ -22,7 +22,6 @@ const [gigToDelete, setGigToDelete] = useState(null);
       const [gigsRes, orderRes /*, messageRes */] = await Promise.all([
         axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/seller/gigs`, { withCredentials: true }),
         axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/seller/orders/count`, { withCredentials: true }),
-        // axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/seller/messages/count`, { withCredentials: true }),
       ]);
 
       setGigs(gigsRes?.data || []);
@@ -45,7 +44,11 @@ const [gigToDelete, setGigToDelete] = useState(null);
  
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 p-6">
+        <Link href="/" className="text-blue-400 hover:text-blue-500 flex items-center gap-2">
+    ⬅️ Back to Home
+  </Link>
       <div className="flex justify-between items-center mb-6">
+      
         <h1 className="text-3xl font-bold">Seller Dashboard</h1>
         <div className="flex gap-4">
           <Link href="/gig_info">
@@ -53,6 +56,13 @@ const [gigToDelete, setGigToDelete] = useState(null);
               + Create New Gig
             </button>
           </Link>
+
+           <Link href="/seller/chat">
+    <button className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition">
+      💬 View Messages
+    </button>
+  </Link>
+
           <button
             onClick={handleLogout}
             className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition"
@@ -71,10 +81,7 @@ const [gigToDelete, setGigToDelete] = useState(null);
           <h2 className="text-xl font-semibold text-gray-200">Total Orders</h2>
           <p className="text-2xl text-white">{orderCount}</p>
         </div>
-        <div className="bg-gray-800 p-6 rounded-lg shadow">
-          <h2 className="text-xl font-semibold text-gray-200">Client Messages</h2>
-          <p className="text-2xl text-white">{messageCount}</p>
-        </div>
+        
       </div>
 
       <div>
@@ -87,7 +94,12 @@ const [gigToDelete, setGigToDelete] = useState(null);
     <p className="text-gray-400 truncate">{gig.desc}</p>
     <p className="mt-2 font-medium text-green-400">$ {gig.price}</p>
   </div>
-  <div className="mt-4 flex gap-2">
+  <div className="mt-4 flex gap-2 flex-wrap">
+    <Link href={`/gigs/${gig._id}`}>
+    <button className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition text-sm">
+      View
+    </button>
+  </Link>
     <Link href={`/gig_info/${gig._id}`}>
       <button className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition text-sm">
         Update

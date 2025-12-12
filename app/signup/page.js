@@ -51,11 +51,11 @@ const page = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Registration failed');
 
-      // optional → auto‑redirect to dashboard or login
+      
       if (form.role === 'client') {
       router.push('/categories');
     } else if (form.role === 'freelancer') {
-      router.push('/seller/personal_info');
+      router.push('/creategig');
     }
     } catch (err) {
       setError(err.message);

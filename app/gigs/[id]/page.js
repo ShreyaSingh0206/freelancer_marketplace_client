@@ -2,10 +2,15 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import axios from 'axios';
+import StarRating from "../../components/StarRating";
 
 export default function GigDetailPage() {
   const { id } = useParams();
   const [gig, setGig] = useState(null);
+  const [reviews, setReviews] = useState([]);
+  const [rating, setRating] = useState(1);
+  const [comment, setComment] = useState("");
 
   useEffect(() => {
     const fetchGig = async () => {
@@ -21,6 +26,14 @@ export default function GigDetailPage() {
     };
     fetchGig();
   }, [id]);
+
+  useEffect(() => {
+  if (!gig?._id) return;
+
+  axios
+    .get(`${process.env.NEXT_PUBLIC_API_URL}/api/reviews/${gig._id}`)
+    .then((res) => setReviews(res.data));
+}, [gig]);
 
   if (!gig) return <div className="text-white p-10">Loading...</div>;
 
@@ -69,6 +82,26 @@ const handleAddToWishlist = async () => {
   } catch (err) {
     console.error("Error adding to wishlist:", err);
     alert("Something went wrong");
+  }
+};
+
+const submitReview = async () => {
+  try {
+  await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/reviews/`,
+    {
+      gigId: gig._id,
+      rating,
+      comment,
+    },
+    { withCredentials: true }
+  );
+
+  alert("Review Submitted!");
+  window.location.reload();
+} catch (err) {
+    console.error(err.response?.data);
+    alert(err.response?.data || "Review failed");
   }
 };
 
@@ -123,6 +156,7 @@ const handleAddToWishlist = async () => {
         </div>
 
         {/* Sidebar Section */}
+        <div className="space-y-8">
         <aside className="bg-white/5 border border-white/10 rounded-xl p-6 h-fit">
           <h3 className="text-2xl font-semibold mb-4">Get this Gig</h3>
           <p className="text-green-400 text-xl font-bold mb-4">$ {gig.price}</p>
@@ -137,7 +171,64 @@ const handleAddToWishlist = async () => {
           className="w-full border border-white/20 hover:bg-white/10 transition text-white py-2 rounded-xl font-medium">
             ❤️ Add to Wishlist
           </button>
+          </aside>
+<aside className="bg-white/5 border border-white/10 rounded-xl p-6 h-fit">
+                  <div className="mt-10">
+  <h2 className="text-xl font-bold mb-4">Customer Reviews</h2>
+
+  {reviews.length === 0 && <p>No reviews yet.</p>}
+
+  {reviews.map((review) => (
+    <div key={review._id} className="border p-4 rounded mb-3">
+      <div className="flex justify-between">
+        <p className="font-medium">{review.buyer.name}</p>
+
+        <div className="flex">
+  {[...Array(5)].map((_, i) => (
+    <span
+      key={i}
+      className={
+        i < review.rating
+          ? "text-yellow-400 text-lg"
+          : "text-gray-300 text-lg"
+      }
+    >
+      ★
+    </span>
+  ))}
+</div>
+
+      </div>
+      <p className="text-gray-600 mt-2">{review.comment}</p>
+    </div>
+  ))}
+
+  <div className="mt-10">
+  <h3 className="text-lg font-semibold mb-2">Leave a Review</h3>
+
+  <div className="mt-4">
+  <p className="font-medium mb-1">Your Rating</p>
+  <StarRating rating={rating} setRating={setRating} />
+</div>
+
+  <textarea
+    className="border w-full mt-3 p-2"
+    placeholder="Write your review..."
+    onChange={(e) => setComment(e.target.value)}
+  />
+
+  <button
+    onClick={submitReview}
+    className="bg-black text-white px-4 py-2 mt-3 rounded"
+  >
+    Submit Review
+  </button>
+</div>
+
+</div>
         </aside>
+        </div>
+
       </div>
     </main>
   );
