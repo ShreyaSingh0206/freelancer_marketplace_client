@@ -1,16 +1,12 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-export const fetchCache = "force-no-store";
-
 import { Suspense } from "react";
-import PaymentSuccessClient from "./payment-success-client";
+import PaymentSuccessContent from "./payment-success-content";
 
-export default function PaymentSuccessWrapper() {
+export default function PaymentSuccessPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <PaymentSuccessClient />
+      <PaymentSuccessContent />
     </Suspense>
   );
 }
