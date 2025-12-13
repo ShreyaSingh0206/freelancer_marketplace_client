@@ -1,20 +1,14 @@
-export const dynamic = "force-dynamic";
-
-'use client';
-
-import dynamicImport from "next/dynamic";
 import { Suspense } from "react";
+import PaymentSuccessClient from "./PaymentSuccessClient";
 
-const PaymentSuccessContent = dynamicImport(
-  () => import("./payment-success-content"),
-  { ssr: false }
-);
+export const dynamic = "force-dynamic";
 
 export default function Page() {
   return (
     <Suspense fallback={<p>Loading...</p>}>
-      <PaymentSuccessContent />
+      <PaymentSuccessClient />
     </Suspense>
   );
 }
+
 
