@@ -1,15 +1,20 @@
 "use client";
+
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import axios from "axios";
-import GigCard from "../components/GigCard"; // Adjust this import to your card UI
+import GigCard from "../components/GigCard";
 
 export default function SearchPage() {
-  const searchParams = useSearchParams();
-  const category = searchParams.get("category"); // from URL: ?category=Design
-
+  const [category, setCategory] = useState(null);
   const [gigs, setGigs] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // ✅ Read query params safely (no prerender crash)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get("category");
+    setCategory(cat);
+  }, []);
 
   useEffect(() => {
     if (!category) return;
@@ -17,7 +22,9 @@ export default function SearchPage() {
     const fetchGigs = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`/api/search?category=${encodeURIComponent(category)}`);
+        const res = await axios.get(
+          `/api/search?category=${encodeURIComponent(category)}`
+        );
         setGigs(res.data);
       } catch (err) {
         console.error("Error fetching gigs", err);
@@ -32,7 +39,8 @@ export default function SearchPage() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-semibold mb-4">
-        Results for: <span className="text-primary">{category}</span>
+        Results for:{" "}
+        <span className="text-primary">{category ?? "…"}</span>
       </h1>
 
       {loading ? (
