@@ -11,6 +11,8 @@ export default function GiginfoPage() {
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState('')
 
+  const router = useRouter();
+
   const { user } = useAuth();
   console.log("Current User:", user);
 
@@ -27,7 +29,7 @@ export default function GiginfoPage() {
   formData.append("desc", description);
   formData.append("price", price);
   formData.append("thumbnail", thumbnail);
-   formData.append("seller", user._id); 
+  //  formData.append("seller", user._id); 
 
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/gigs`, {

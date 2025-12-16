@@ -20,12 +20,6 @@ const categories = [
     gradient: "from-purple-500 via-fuchsia-500 to-pink-500",
   },
   {
-    slug: "app-development",
-    label: "App Development",
-    icon: Smartphone,
-    gradient: "from-indigo-500 via-purple-500 to-blue-500",
-  },
-  {
     slug: "android-app-development",
     label: "Android App Development",
     icon: Smartphone,
