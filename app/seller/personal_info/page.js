@@ -69,6 +69,7 @@ export default function PersonalInfoPage() {
         credentials: "include",
         method: "POST",
         body,
+        cache: "no-store",
       })
       if (!res.ok) throw new Error("Failed to save")
       alert("Saved!")
