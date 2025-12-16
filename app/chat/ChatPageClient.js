@@ -47,6 +47,14 @@ export default function ChatPageClient() {
     return <p className="text-center mt-10">Loading chat...</p>;
   }
 
+  const receiver = selectedConversation.participants?.find(
+  (p) => p?._id && p._id !== user._id
+);
+
+if (!receiver) {
+  return <p className="text-center mt-10">Loading chat...</p>;
+}
+
   return (
     <div className="h-screen w-full flex items-center justify-center bg-gray-900 text-white overflow-hidden">
       <div className="h-[90vh] w-[650px] max-w-[95vw] bg-gray-800 rounded-lg shadow-lg flex flex-col overflow-hidden">
@@ -59,9 +67,7 @@ export default function ChatPageClient() {
           <ChatBox
             conversationId={selectedConversation._id}
             loggedInUserId={user._id}
-            receiverId={
-              selectedConversation.participants.find((p) => p._id !== user._id)._id
-            }
+             receiverId={receiver._id}
           />
         </div>
 
