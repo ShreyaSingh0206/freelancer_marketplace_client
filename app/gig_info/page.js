@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react'
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 
 
@@ -44,6 +45,7 @@ export default function GiginfoPage() {
    
 
     alert("Gig created!");
+    router.push("/seller/dashboard");
   } catch (err) {
     console.error(err);
     alert("Error creating gig");
