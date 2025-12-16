@@ -48,7 +48,7 @@ export default function ChatPageClient() {
   }
 
   const receiver = selectedConversation.participants?.find(
-  (p) => p?._id && p._id !== user._id
+  (p) => p?._id?.toString() !== user._id
 );
 
 if (!receiver) {
@@ -68,7 +68,7 @@ if (!receiver) {
           <ChatBox
             conversationId={selectedConversation._id}
             loggedInUserId={user._id}
-             receiverId={receiver._id}
+             receiverId={receiver._id.toString()}
           />
         </div>
 
