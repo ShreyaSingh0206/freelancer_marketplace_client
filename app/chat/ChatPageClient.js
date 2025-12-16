@@ -52,6 +52,7 @@ export default function ChatPageClient() {
 );
 
 if (!receiver) {
+  console.log("No receiver found:", selectedConversation);
   return <p className="text-center mt-10">Loading chat...</p>;
 }
 
