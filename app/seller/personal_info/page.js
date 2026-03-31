@@ -73,7 +73,7 @@ export default function PersonalInfoPage() {
       })
       if (!res.ok) throw new Error("Failed to save")
       alert("Saved!")
-      router.push("/gig_info")
+      router.push("/subscribe")
     } catch (err) {
       console.error(err)
       alert(err.message)

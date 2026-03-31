@@ -78,77 +78,118 @@ export default function BuyerDashboard() {
 };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Buyer Dashboard</h1>
-        <div className="flex gap-4">
-          <button
-            onClick={handleBecomeSeller}
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-200"
-          >
-            Become a Seller
-          </button>
-          <button
-            onClick={handleLogout}
-            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200"
-          >
-            Logout
-          </button>
-        </div>
+  <div className="min-h-screen bg-gray-900 text-white px-6 py-4">
+
+    {/* Header */}
+    <div className="flex justify-between items-center mb-8">
+      <h1 className="text-2xl font-semibold">Buyer Dashboard</h1>
+
+      <div className="flex gap-3">
+        <button
+          onClick={handleBecomeSeller}
+          className="bg-green-600 px-5 py-3 text-sm rounded hover:bg-green-700"
+        >
+          Become Seller
+        </button>
+
+        <button
+          onClick={handleLogout}
+          className="bg-red-600 px-3 py-1.5 text-sm rounded hover:bg-red-700"
+        >
+          Logout
+        </button>
       </div>
-
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-4">Purchased Gigs ({purchasedGigs.length})</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-         {purchasedGigs.map(order => (
-  <div
-    key={order._id}
-    className="relative bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition"
-  >
-    {/* ✅ Chat Button at Top-Right */}
-    <button
-      onClick={() => handleChatWithSeller(order.sellerId)}
-      className="absolute top-3 right-3 bg-purple-600 text-white px-4 py-2 rounded  hover:bg-purple-700"
-    >
-      💬 Chat with seller
-    </button>
-
-    <h3 className="text-xl font-bold mb-2">{order.gig.title}</h3>
-    <p className="text-gray-300 mb-3">{order.gig.desc}</p>
-
-    <Link
-      href={`/gigs/${order.gig._id}`}
-      className="text-blue-400 hover:underline"
-    >
-      View Gig
-    </Link>
-  </div>
-))}
-        </div>
-      </section>
-
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Wishlisted Gigs ({wishlistedGigs.length})</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {wishlistedGigs.map(gig => (
-            <div key={gig._id} className="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition relative">
-              <h3 className="text-xl font-bold mb-2">{gig.title}</h3>
-              <p className="text-gray-300 mb-3">{gig.desc}</p>
-              <div className="flex justify-between items-center">
-                <Link href={`/gigs/${gig._id}`} className="text-blue-400 hover:underline">
-                  View Gig
-                </Link>
-                <button
-                  onClick={() => handleRemoveFromWishlist(gig._id)}
-                  className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 text-sm transition"
-                >
-                  Remove
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
     </div>
-  );
+
+    {/* Purchased Section */}
+    <section className="mb-10">
+      <h2 className="text-lg font-medium mb-4 text-gray-300">
+        Purchased ({purchasedGigs.length})
+      </h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+        {purchasedGigs.map(order => (
+          <div
+            key={order._id}
+            className="bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-gray-500 transition"
+          >
+
+            <div className="flex justify-between items-start mb-2">
+              <h3 className="font-semibold text-md line-clamp-1">
+                {order.gig.title}
+              </h3>
+
+             <button
+  onClick={() => handleChatWithSeller(order.sellerId)}
+  className="flex items-center gap-1 text-xs bg-purple-600 px-3 py-1.5 rounded hover:bg-purple-700 transition"
+>
+  <span>💬</span>
+  <span>Chat</span>
+</button>
+            </div>
+
+            <p className="text-gray-400 text-sm line-clamp-2 mb-3">
+              {order.gig.desc}
+            </p>
+
+            <Link
+              href={`/gigs/${order.gig._id}`}
+              className="text-sm text-blue-400 hover:underline"
+            >
+              View Gig
+            </Link>
+
+          </div>
+        ))}
+
+      </div>
+    </section>
+
+    {/* Wishlist */}
+    <section>
+      <h2 className="text-lg font-medium mb-4 text-gray-300">
+        Wishlist ({wishlistedGigs.length})
+      </h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+        {wishlistedGigs.map(gig => (
+          <div
+            key={gig._id}
+            className="bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-gray-500 transition"
+          >
+
+            <h3 className="font-semibold text-md mb-1 line-clamp-1">
+              {gig.title}
+            </h3>
+
+            <p className="text-gray-400 text-sm line-clamp-2 mb-3">
+              {gig.desc}
+            </p>
+
+            <div className="flex justify-between items-center">
+              <Link
+                href={`/gigs/${gig._id}`}
+                className="text-sm text-blue-400 hover:underline"
+              >
+                View
+              </Link>
+
+              <button
+                onClick={() => handleRemoveFromWishlist(gig._id)}
+                className="text-xs bg-red-600 px-2 py-1 rounded hover:bg-red-700"
+              >
+                Remove
+              </button>
+            </div>
+
+          </div>
+        ))}
+
+      </div>
+    </section>
+
+  </div>
+);
 }

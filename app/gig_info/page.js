@@ -2,6 +2,8 @@
 import React, { useState } from 'react'
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
+import { useEffect } from "react";
+
 
 
 export default function GiginfoPage() {
@@ -13,8 +15,17 @@ export default function GiginfoPage() {
 
   const router = useRouter();
 
-  const { user } = useAuth();
-  console.log("Current User:", user);
+
+  const { user, loading } = useAuth();
+
+useEffect(() => {
+  if (loading) return;
+
+  if (user?.role === "freelancer" && !user?.isSubscribed) {
+    router.push("/subscribe");
+  }
+
+}, [user, loading]);
 
   const handleThumbnailChange = (e) => {
     setThumbnail(e.target.files[0])
@@ -59,6 +70,11 @@ export default function GiginfoPage() {
     <div className="min-h-screen bg-zinc-900 text-white py-10 px-6">
       <div className="max-w-4xl mx-auto space-y-10">
         <h1 className="text-3xl font-bold mb-6 text-center">Create a New Gig</h1>
+        {user && user.role === "freelancer" && !user.isSubscribed && (
+  <div className="bg-red-500/20 border border-red-500 text-red-300 p-4 rounded-lg">
+    You need a subscription to create gigs.
+  </div>
+)}
 
         {/* Form Starts */}
         <form className="space-y-10" onSubmit={handleSubmit}>
@@ -158,10 +174,15 @@ export default function GiginfoPage() {
           {/* Submit Button */}
           <div className="flex justify-center pt-6">
             <button
-              type="submit"
-              className="bg-purple-600 hover:bg-purple-700 transition px-6 py-3 rounded-lg font-semibold"
-            >
-              Create Gig
+                type="submit"
+                disabled={!user?.isSubscribed}
+                className={`px-6 py-3 rounded-lg font-semibold ${
+                  user?.isSubscribed
+                    ? "bg-purple-600 hover:bg-purple-700"
+                    : "bg-gray-600 cursor-not-allowed"
+                }`}
+              >
+                {user?.isSubscribed ? "Create Gig" : "Subscription Required"}
             </button>
           </div>
         </form>
