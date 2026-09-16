@@ -317,6 +317,7 @@ freelancer_marketplace_client/
 ├── package.json          # Project dependencies and scripts
 ├── postcss.config.mjs    # PostCSS configuration
 └── .env.example         # Environment variable template
+```
 The backend is maintained separately — see the [Backend Repository →](https://github.com/ShreyaSingh0206/freelancer_marketplace_server).
 
 ---
