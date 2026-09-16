@@ -250,7 +250,7 @@ Freelancers select a subscription plan before gaining access to gig creation.
 ### Prerequisites
 
 - Node.js 18+
-- A running instance of the [HireHatch Backend](#) (local or deployed)
+- A running instance of the [HireHatch Backend](https://github.com/ShreyaSingh0206/freelancer_marketplace_server) (local or deployed)
 - Git
 
 ### Frontend Setup
@@ -277,7 +277,7 @@ The app will be available at `http://localhost:3000` by default.
 
 The backend is maintained in a separate repository:
 
-🔗 [HireHatch Backend Repository →](#)
+🔗 [HireHatch Backend Repository →](https://github.com/ShreyaSingh0206/freelancer_marketplace_server)
 
 ```bash
 git clone <backend-repository-url>
@@ -317,7 +317,7 @@ freelancer_marketplace_client/
 ├── package.json          # Project dependencies and scripts
 ├── postcss.config.mjs    # PostCSS configuration
 └── .env.example         # Environment variable template
-The backend is maintained separately — see the [Backend Repository →](#).
+The backend is maintained separately — see the [Backend Repository →](https://github.com/ShreyaSingh0206/freelancer_marketplace_server).
 
 ---
 
@@ -350,4 +350,4 @@ The backend is maintained separately — see the [Backend Repository →](#).
 **Shreya Kumari**
 B.Tech Information Technology
 
-[GitHub →](#)
+[GitHub →](https://github.com/ShreyaSingh0206/)
