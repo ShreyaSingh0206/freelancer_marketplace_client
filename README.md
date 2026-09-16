@@ -105,10 +105,10 @@ This is the **frontend** repository. The backend (Node.js/Express API) is mainta
                        Start Project
                              │
                              ▼
-                      Real-Time Chat
+                          Payment
                              │
                              ▼
-                          Payment
+                        Real-Time Chat
                              │
                              ▼
                      Project Workflow
